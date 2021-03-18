@@ -1,22 +1,24 @@
 ---
 layout: post
-title: "MicroProfile 4.0 support in Open Liberty 21.0.0.3"
+title: "A Deep Dive into MicroProfile 4.0 with Open Liberty"
 categories: blog
 author_picture: https://avatars.githubusercontent.com/u/10999780?s=460&u=1a66e468c70e84f54bf5a75c27881cc6133ccc20&v=4
 author_github: https://github.com/Emily-Jiang
-seo-title: MicroProfile 4.0 support in Open Liberty 21.0.0.3 - OpenLiberty.io
-seo-description: This post demonstrates how to use MicroProfile 4.0 in Open Liberty 21.0.0.3.
-blog_description: "This post demonstrates how to use MicroProfile 4.0 in Open Liberty 21.0.0.3."
+seo-title: A Deep Dive into MicroProfile 4.0 with Open Liberty - OpenLiberty.io
+seo-description: The latest release of MicroProfile 4.0 is the first release under the newly-formed MicroProfile Working Group, delivering alignment with Jakarta EE 8 as well as new and exciting updates to many of the core MicroProfile APIs - Config, Fault Tolerance, Health, JWT RBAC, Metrics, Open API, Open Tracing, Rest Client. This post dives into these updates in further detail and demonstrates how you can utilize MicroProfile 4.0 in Open Liberty 21.0.0.3.
+blog_description: "The latest release of MicroProfile 4.0 is the first release under the newly-formed MicroProfile Working Group, delivering alignment with Jakarta EE 8 as well as new and exciting updates to many of the core MicroProfile APIs - Config, Fault Tolerance, Health, JWT RBAC, Metrics, Open API, Open Tracing, Rest Client. This post dives into these updates in further detail and demonstrates how you can utilize MicroProfile 4.0 in Open Liberty 21.0.0.3."
 ---
-= MicroProfile 4.0 support in Open Liberty 21.0.0.3
-
+= A Deep Dive into MicroProfile 4.0 with Open Liberty
 Emily Jiang <https://github.com/Emily-Jiang>
+:imagesdir: /
+:url-prefix:
+:url-about: /
 
 The latest release of link:https://github.com/eclipse/microprofile/releases/tag/4.0.1[MicroProfile 4.0] aligns with link:https://jakarta.ee/release/8/[Jakarta EE 8]. There are many new and exciting features introduced in MicroProfile 4.0. In this post, we'll
 take a look at all of the MicroProfile 4.0 updated features and then show you how to use them in Open Liberty. 
 
 == What's New In MicroProfile 4.0?
-The full list of MicroProfile 4.0 specification includes the following specification update.
+The full list of MicroProfile 4.0 specification includes the update from Jakarta EE 8 and the MicroProfile specification update.
 
 === Jakarta EE 8 Specification updates:
 
@@ -26,7 +28,7 @@ The full list of MicroProfile 4.0 specification includes the following specifica
 . link:https://jakarta.ee/specifications/jsonb/1.0/jsonb-spec-1.0.html[Jakarta JSON Binding 1.0]
 . link:https://jakarta.ee/specifications/jsonp/1.1/jsonp-spec-1.1.html[Jakarta JSON Processing 1.1]
 
-Open Liberty releases (19.0.0.6 and onwards) are link:https://jakarta.ee/compatibility/#tab-8[Jakarta EE 8 compatible]. Jakarta EE 8 features are functional identical to their Java EE 8 counterparts with the only difference being the maven coordinates.
+Open Liberty releases (19.0.0.6 and onwards) are link:https://jakarta.ee/compatibility/#tab-8[Jakarta EE 8 compatible]. Jakarta EE 8 features are functionally identical to their Java EE 8 counterparts with the only difference being the maven coordinates. The alignment with Jakarta EE 8 demonstrates MicroProfile welcomes the new releases from Jakarta EE and tries to keep up with the new releases from Jakarta EE.
 
 === MicroProfile Component Specification Updates:
 
@@ -44,9 +46,10 @@ In the next section, we will go through each MicroProfile Specification and take
 
 == Getting started
 
-MicroProfile 4.0 implementation is new in Open Liberty 21.0.0.3 - you can use any version from 21.0.0.3 and onwards.
+MicroProfile 4.0 implementation is now available in link:https://openliberty.io/blog/2021/03/19/microprofile-4-21003.html[Open Liberty 21.0.0.3] and future releases.
 
-First, you need to add the following link:{url-prefix}/guides/maven-intro.html[Maven] dependency
+To make use of MicroProfile 4.0 you must add the feature to both pom.xml and server.xml.
+Add the following link:{url-prefix}/guides/maven-intro.html[Maven] dependency
 to your pom.xml:
 
 [source,xml]
@@ -69,7 +72,7 @@ dependencies {
     mpRestClient group: 'org.eclipse.microprofile', name: 'microprofile', version: '4.0.1'
 }
 ----
-Please note: you need to use the version `4.0.1` as the version `4.0` does not pull in any dependencies by mistake (see link:https://github.com/eclipse/microprofile/issues/205[here] for more details).
+Please note: you need to use the version `4.0.1` as the version `4.0` does not pull in any dependencies (see link:https://github.com/eclipse/microprofile/issues/205[here] for more details).
 
 Also, make sure to configure your Liberty server with the `microProfile-4.0` feature in the server.xml:
 [source,xml]
@@ -84,7 +87,7 @@ Also, make sure to configure your Liberty server with the `microProfile-4.0` fea
 ----
 
 
-That's it! Now that we've got our development and deployment environments set up, it's time to dive into each individual MicroProfile Specification to learn the amazing updates!
+That's it! Now that we've got our development and deployment environments set up, it's time to dive into each individual MicroProfile Specification to learn more about these highly anticipated updates!
 
 . <<config-2.0, What's new in MicroProfile Config 2.0>>
 . <<fault-tolerance-3.0, New features in MicroProfile Fault Tolerance 3.0>>
@@ -94,6 +97,7 @@ That's it! Now that we've got our development and deployment environments set up
 . <<open-api-2.0, What's New in MicroProfile Open API 2.0>>
 . <<rest-client-2.0, Awesome features in MicroProfile Rest Client 2.0>>
 . <<jwt-1.2, Must known features in MicroProfile JWT Auth 1.2>>
+. <<summary, Summary>>
 
 
 
@@ -109,7 +113,7 @@ Watch this space for a new blog post dedicated to MicroProfile Config 2.0.
 [#fault-tolerance-3.0]
 == What's New in MicroProfile Fault Tolerance 3.0
 
-MicroProfile Fault Tolerance allows you to easily apply strategies for mitigating failure to their code. It provides annotations which you can add to methods to use bulkhead, circuit breaker, retry, timeout and fallback strategies.
+MicroProfile Fault Tolerance allows you to easily apply strategies for mitigating failure to your code. It provides annotations that you can add to methods to use bulkhead, circuit breaker, retry, timeout and fallback strategies.
 
 Fault Tolerance 3.0 introduces two main features.
 
@@ -123,12 +127,12 @@ Example:
 
 Old metric: `application:ft.<name>.timeout.callsTimedOut.total`
 
-New metric: `base:ft.timeout.calls.total{method="<name>", timedOut="true"}``
+New metric: `base:ft.timeout.calls.total{method="<name>", timedOut="true"}`
 
 
 === Clarify the scope of Bulkheads and CircuitBreakers
 
-The specification now requires that circuit breakers and bulkheads are singletons, identified by the bean class and the guarded method. For example, if a @RequestScoped bean has a @CircuitBreaker method, all invocations of that method will share the same circuit breaker state, even though each request has a different instance of the bean.
+The specification now requires that circuit breakers and bulkheads are singletons, identified by the bean class and the guarded method. For example, if a `@RequestScoped` bean has a `@CircuitBreaker` method, all invocations of that method will share the same circuit breaker state, even though each request has a different instance of the bean.
 
 Get an introduction to MicroProfile Fault Tolerance with the Open Liberty guides link:{url-prefix}/guides/retry-timeout.html[Failing fast and recovering from errors] and link:{url-prefix}/guides/circuit-breaker.html[Preventing repeated failed calls to microservices].
 
@@ -155,20 +159,20 @@ For more information:
 
 
 [#metrics-3.0]
-=== What's New in MicroProfile Metrics 3.0
+== What's New in MicroProfile Metrics 3.0
 
 MicroProfile Metrics 3.0 introduces new metric values for the existing SimpleTimer and Timer metrics. Additionally a new REST metric is introduced for better monitoring and handling of unmapped exceptions. Manual configuration for re-usability has been removed. A notable change to the MicroProfile Metrics programming model regarding CDI Producers has been made. Lastly a medley of API improvements and refactoring have been added in this release.
 
-==== SimpleTimer
+=== SimpleTimer
 The SimpleTimer metric now tracks and reports the highest and lowest recorded time duration of the previous complete minute. See link:https://download.eclipse.org/microprofile/microprofile-metrics-3.0/apidocs/index.html?org/eclipse/microprofile/metrics/SimpleTimer.html[SimpleTimer Javadoc] for more information.
 
-==== Timer
-The Time metric now tracks and reports the total elapsed time duration. See link:https://download.eclipse.org/microprofile/microprofile-metrics-3.0/apidocs/index.html?org/eclipse/microprofile/metrics/Timer.html[Timer Javadoc] for more information.
+=== Timer
+The Timer metric now tracks and reports the total elapsed time duration. See link:https://download.eclipse.org/microprofile/microprofile-metrics-3.0/apidocs/index.html?org/eclipse/microprofile/metrics/Timer.html[Timer Javadoc] for more information.
 
-==== REST metric
-A new `REST.request.unmappedException.total` metric that is backed by a counter metric has been introduced. Similar to the `REST.request` metric, there will be one unique metric for each REST endpoint identified by a class and method label. The new REST metric will count the amount of times the request ends in an unmapped exception. The REST.request metric corresponding to this REST endpoint will not record any values if an unmapped exception has occured.
+=== REST metric
+A new `REST.request.unmappedException.total` metric that is backed by a counter metric has been introduced. Similar to the `REST.request` metric, there will be one unique metric for each REST endpoint identified by a class and method label. The new REST metric will count the amount of times the request ends in an unmapped exception. The `REST.request` metric corresponding to this REST endpoint will not record any values if an unmapped exception has occured.
 
-==== CDI Producer
+=== CDI Producer
 The `@Metrics` annotation will no longer support the method target (i.e it can not be annotated on a method). Additionally, it will not support usage with CDI Producers.
 
 ==== Try it now 
@@ -189,7 +193,7 @@ More information:
 * link:https://download.eclipse.org/microprofile/microprofile-metrics-3.0/microprofile-metrics-spec-3.0.html#release_notes_3_0[Release Notes]
 
 [#health-3.0]
-=== New changes in MicroProfile Health 3.0
+== New changes in MicroProfile Health 3.0
 
 MicroProfile Health 3.0 enables you to provide your own health check procedures to be invoked by Open Liberty, to verify the health of your microservices.
 
@@ -205,7 +209,7 @@ In the `mpHealth-3.0` feature for Open Liberty:
 
 * The deprecated `@Health` qualifier was removed. Instead, the `@Liveness` or `@Readiness` qualifiers should be used as appropriate in your HealthCheck implementations.
 
-Applications are expected to provide health check procedures by implementing the HealthCheck interface with the `@Liveness` or `@Readiness` annotations. These are used by Open Liberty to verify the Liveness or Readiness of the application, respectively. Add the logic of your health check in the call() method, and return an instance of `HealthCheckResponse` by using the simple `up` and `down` API methods:
+Applications are expected to provide health check procedures by implementing the HealthCheck interface with the `@Liveness` or `@Readiness` annotations. These are used by Open Liberty to verify the Liveness or Readiness of the application, respectively. Add the logic of your health check in the `call()` method, and return an instance of `HealthCheckResponse` by using the simple `up` and `down` API methods:
 
 [source, java]
 ----
@@ -237,7 +241,7 @@ public class AppReadyCheck implements HealthCheck {
 ...
 ----
 
-To view the status of each health check, access the either the `http://<hostname>:<port>/health/live` or `http://<hostname>:<port>/health/ready endpoints`.
+To view the status of each health check, access either `http://<hostname>:<port>/health/live` or `http://<hostname>:<port>/health/ready endpoints`.
 
 More information:
 
@@ -246,7 +250,7 @@ More information:
 * link:https://download.eclipse.org/microprofile/microprofile-health-3.0/microprofile-health-spec-3.0.html#release_notes_3_0[Release notes]
 
 [#opentracing-2.0]
-=== New updates in  MicroProfile Open Tracing 2.0
+== New updates in  MicroProfile Open Tracing 2.0
 
 MicroProfile OpenTracing 2.0 can be used to profile and monitor applications built using microservice architecture.
 
@@ -262,7 +266,7 @@ Include the following in the `server.xml`:
     <feature>mpOpenTracing-2.0</feature>
 ----
 
-Also configure a tracing backend such as Jaeger or Zipkin. +
+Next, configure a tracing backend such as Jaeger or Zipkin. +
 For Jaeger, add the following maven dependencies in the application's pom.xml.
 
 [source, xml]
@@ -287,6 +291,8 @@ For Jaeger, add the following maven dependencies in the application's pom.xml.
 You can find out more about about configuring Jaeger settings using environment variables by looking 
 at link:https://github.com/jaegertracing/jaeger-client-java/blob/v1.2.0/jaeger-core/README.md[jaeger-client-java readme].
 
+We also have an Open Liberty guide on enabling distributed tracing using Jaeger which you can access link:https://openliberty.io/guides/microprofile-opentracing-jaeger.html[here].
+
 For the `JAEGER_PASSWORD` environment variable, the password can be encoded using the `securityUtility` command.
 
 Depending on Jaeger’s sampling settings `JAEGER_SAMPLER_TYPE` and `JAEGER_SAMPLER_PARAM`, 
@@ -303,6 +309,8 @@ Define your application in the `server.xml`:
 </webApplication>
 ----
 
+We also have an Open Liberty guide on enabling distributed tracing with Zipkin too which you can access link:https://openliberty.io/guides/microprofile-opentracing.html[here].
+
 Once you have hit some JAX-RS endpoints of your application, you should be able to find spans in the user interface of your tracing backend.
 
 More information:
@@ -312,13 +320,13 @@ More information:
 * link:https://download.eclipse.org/microprofile/microprofile-opentracing-2.0/microprofile-opentracing-spec-2.0.html#_release_2_0[Release notes]
 
 [#open-api-2.0]
-=== What's New in MicroProfile Open API 2.0 
+== What's New in MicroProfile Open API 2.0 
 
 MicroProfile OpenAPI 2.0 builds on top of the OpenAPI v3 specification. The link:https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md[OpenAPI v3 specification] defines a standard, language-agnostic, interface for describing REST APIs which allows documentation to be generated from the APIs themselves. The link:https://download.eclipse.org/microprofile/microprofile-open-api-2.0/microprofile-openapi-spec-2.0.html[MicroProfile OpenAPI specification] provides a unified Java API for the OpenAPI v3 specification which allows Java developers to generate OpenAPI v3 documents from their JAX-RS applications.
 MicroProfile OpenAPI 2.0 introduces some new annotations that simplify the process of generating OpenAPI documentation for your REST APIs. It also introduces a new MicroProfile Config property prefix that can be used to define the schema for Java classes that you do not have the source code for.
 
 [#schemaproperty]
-==== @SchemaProperty
+=== @SchemaProperty
 
 The `@SchemaProperty` annotation has been added to allow you to include properties in the definition of a schema when using the `@Schema` annotation. Previously, the `@Schema` annotation did not allow you to define any properties. Properties were introspected from the implementation class.
 With the introduction of the `@SchemaProperty` annotation, a list of properties can now be defined using the properties attribute on the `@Schema` annotation. For example;
@@ -338,7 +346,7 @@ With the introduction of the `@SchemaProperty` annotation, a list of properties 
 )
 ----
 [#requestbodyschema]
-==== @RequestBodySchema
+=== @RequestBodySchema
 
 The `@RequestBodySchema` annotation has been added to provide a shorthand mechanism to specify the schema for a request body. Previously, defining the schema for a request body required the use of three different annotations, as follows:
 [source, java]
@@ -362,7 +370,7 @@ With the introduction of the `@RequestBodySchema` annotation, this can be simpli
 ----
 
 [#apiresponseschema]
-==== @APIResponseSchema
+=== @APIResponseSchema
 
 Similarly, the `@APIResponseSchema` annotation has been added to provide a shorthand mechanism to specify the schema for a response body. Previously, defining the schema for a response body required the use of three different annotations:
 
@@ -387,7 +395,7 @@ With the introduction of the `@RequestBodySchema` annotation, this can be simpli
 ----
 
 [#mpopenapischeme]
-==== The "mp.openapi.schema." property prefix
+=== The "mp.openapi.schema." property prefix
 The `mp.openapi.schema.*` MicroProfile Config property prefix has been added to allow you to define the schema for Java classes using configuration rather than code. The use of this property is functionally equivalent to the use of the `@Schema` annotation on a Java class, but may be used in cases where you do not have access to the source code of a class. The remainder of the property key must be the fully-qualified class name and the value must be a valid OpenAPI schema object, specified in the JSON format.
 For example, in the case where an application needs to represent dates in epoch milliseconds, the following configuration could be used (line escapes and indentation added for readability):
 
@@ -425,7 +433,7 @@ MicroProfile REST Client is a type-safe client API enabling rapid development of
 Shortly we will be publishing a dedicated blog post solely on MicroProfile Rest Client 2.0, which will demonstrate all the new features and how to use them.
 
 [#jwt-1.2]
-=== Enhancements in MicroProfile JWT Auth 1.2
+== Enhancements in MicroProfile JWT Auth 1.2
 
 MicroProfile JWT 1.2 simplifies the configuration for managing the validation of the JWT by introducing new MicroProfile Config properties. Enhanced signature algorithm support is added in this Open Liberty implementation.
 
@@ -435,8 +443,9 @@ MicroProfile JWT 1.2 also supports the JWT specified in a cookie.
 
 Watch this space for a more detailed blog on MicroProfile JWT 1.2.
 
+[#summary]
 == Summary
 
-MicroProfile 4.0 has many new updates as shown above. It is time to try out MicroProfile 4.0 using Open Liberty 21.0.0.3!
+As you can see, MicroProfile 4.0 has many new updates. It is time to try out MicroProfile 4.0 using link:https://openliberty.io/blog/2021/03/19/microprofile-4-21003.html[Open Liberty 21.0.0.3] !
 
-As always, let us know if you have any questions with this new feature. Thanks for checking it out!
+As always, let us know if you have any link:https://stackoverflow.com/tags/open-liberty[questions] with this new feature. Thanks for checking it out!
