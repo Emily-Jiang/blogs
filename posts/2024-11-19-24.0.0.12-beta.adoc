@@ -6,8 +6,8 @@ categories: blog
 author_picture: https://avatars3.githubusercontent.com/dmuelle
 author_github: https://github.com/dmuelle
 seo-title: Enhanced message validation for XML Web Services in 24.0.0.12-beta - OpenLiberty.io
-seo-description: The 24.0.0.12-beta release enhances inbound SOAP message validation in XML Web Services to simplify message debugging and make your web services and clients more resilient during updates.
-blog_description: The 24.0.0.12-beta release enhances inbound SOAP message validation in XML Web Services to simplify message debugging and make your web services and clients more resilient during updates.
+seo-description: The 24.0.0.12-beta release enhances inbound SOAP message validation in XML Web Services to simplify message debugging and make your web services and clients more resilient.
+blog_description: The 24.0.0.12-beta release enhances inbound SOAP message validation in XML Web Services to simplify message debugging and make your web services and clients more resilient.
 open-graph-image: https://openliberty.io/img/twitter_card.jpg
 open-graph-image-alt: Open Liberty Logo
 ---
@@ -17,7 +17,7 @@ David Mueller <https://github.com/dmuelle>
 :url-prefix:
 :url-about: /
 
-The 24.0.0.12-beta release enhances inbound SOAP message validation in XML Web Services to simplify message debugging and make your web services and clients more resilient during updates.
+The 24.0.0.12-beta release enhances inbound SOAP message validation in XML Web Services to simplify message debugging and make your web services and clients more resilient.
 
 
 See also link:{url-prefix}/blog/?search=beta&key=tag[previous Open Liberty beta blog posts].
@@ -29,7 +29,19 @@ See also link:{url-prefix}/blog/?search=beta&key=tag[previous Open Liberty beta 
 [#xmlws]
 == Fine-tuning XML Web Services inbound SOAP message validation
 
-XML Web Services features on Open Liberty now support fine-tuned message validation for inbound SOAP messages. XML Web Services provide various options for message validation. In 24.0.0.12-beta, Open Liberty introduces `server.xml` configuration attributes to support these options. These attributes for the `webService` and `webServiceClient` element allow you to enable full XML schema validation, enable or disable XML binding (JAXB) default validation, or to use default validation while ignoring only `UnmarshallExceptions: Unknown Element` errors.
+Open Liberty's XML Web Services features now support fine-grained message validation for inbound SOAP messages. This enhancement provides more control over message validation options.
+In Open Liberty 24.0.0.12-beta, you can configure message validation using new attributes in the `server.xml` file. These attributes are available for the `webService` and `webServiceClient` elements.
+
+
+[options="header"]
+|=======================
+| Attribute | Description
+| `enableSchemaValidation` | Enable full validation against the XML schema
+| `enableDefaultValidation` | Enable or disable default validation for JAXB
+| `ignoreUnexpectedElements` | Use default validation while ignoring `UnmarshallExceptions: Unknown Element` errors
+|=======================
+
+By using these attributes, you can tailor message validation to your specific needs and improve the security and reliability of your SOAP-based web services.
 
 These attributes require the one of the following XML Web Services features to be enabled in your `server.xml` file:
 
@@ -69,21 +81,25 @@ The following example shows how to enable XML schema validation for a specific c
 <webServiceClient serviceName="<client service name>"  enableSchemaValidation="true" />
 ----
 
-The `Client Service Name` is the name of your XML Web Service client. This name comes from your `@WebServiceClient(serviceName=<client service name>` annotated stub class for managed clients. For unmanaged clients, you can check the `<wsdl:service name="<client service name>"` line in your WSDL file. For example, if the name of your client is `SayHelloService`, set the matching `serviceName` similar to the following example:
+The `Client Service Name` is the name of your XML Web Service client. This name comes from your `@WebServiceClient(serviceName=<client service name>` annotated stub class for managed clients.
+
+For unmanaged clients, you can check the `<wsdl:service name="<client service name>"` line in your WSDL file. For example, if the name of your client is `SayHelloService`, set the matching `serviceName` similar to the following example:
 
 [source,xml]
 ----
 <webServiceClient serviceName="SayHelloService"  enableSchemaValidation="true" />
 ----
 
-The following example shows how to enable XML schema validation for a particular web service by usingnthe webservice port:
+The following example shows how to enable XML schema validation for a particular web service by using the web service port:
 
 [source,xml]
 ----
 <webService portName="<web service port name>"  enableSchemaValidation="true" />
 ----
 
-The `web service port name` is the port name of the individual web service implementation.  This name comes from your `@WebService(portName=<web service port name>` annotated class. Alternatively, you can check the `<wsdl:port ... name="Web Service Port Name">` line in your WSDL file for the port name. For example, if the name of your port name is `SimpleEchoPort`, set the matching `portName` attribute similar to the following example:
+The `web service port name` is the port name of the individual web service implementation.  This name comes from your `@WebService(portName=<web service port name>` annotated class.
+
+Alternatively, you can check the `<wsdl:port ... name="Web Service Port Name">` line in your WSDL file for the port name. For example, if the name of your port name is `SimpleEchoPort`, set the matching `portName` attribute similar to the following example:
 
 [source,xml]
 ----
@@ -140,14 +156,6 @@ To ignore unexpected elements for a specific web service client, set the same at
 === Try it now
 
 To try out these features, update your build tools to pull the Open Liberty All Beta Features package instead of the main release. The beta works with Java SE 23, 21, 17, 11, and 8.
-// // // // // // // //
-// In the preceding section:
-// Check if a new non-LTS Java SE version is supported that needs to be added to the list (21, 17, 11, and 8 are LTS and will remain for a while)
-// https://openliberty.io/docs/latest/java-se.html
-//
-// In the following section:
-// Check if a new MicroProfile or Jakarta version is in beta that could replace the example values in the codeblock
-// // // // // // // //
 
 If you're using link:{url-prefix}/guides/maven-intro.html[Maven], you can install the All Beta Features package by using:
 
