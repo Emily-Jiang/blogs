@@ -84,7 +84,7 @@ The following example shows how to enable XML schema validation for a particular
 <webService portName="<web service port name>"  enableSchemaValidation="true" />
 ----
 
-The `web service port name` is the port name of the individual web service implementation.  This name comes from your `@WebService(portName=<web service port name>` annotated class.
+The value of `portName` is the port name of the Web Service implementation you're configuring.  This name comes from your `@WebService(portName=<web service port name>` annotated class.
 Alternatively, you can check the `<wsdl:port ... name="Web Service Port Name">` line in your WSDL file for the port name.
 
 
@@ -95,14 +95,14 @@ The following example shows how to enable XML schema validation for a specific c
 <webServiceClient serviceName="<client service name>"  enableSchemaValidation="true" />
 ----
 
-The `Client Service Name` is the name of your XML Web Service client. This name comes from your `@WebServiceClient(serviceName=<client service name>` annotated stub class for managed clients.
+The value of `serviceName` is the name of the Web Service Client you're configuring. This name comes from your `@WebServiceClient(serviceName=<client service name>` annotated stub class for managed clients.
 For unmanaged clients, you can check the `<wsdl:service name="<client service name>"` line in your WSDL file.
 
 
 
 === Default validation
 
-You can configure the default level of JAXB validation of inbound SOAP Messages with the `enableDefaultValidation=true` attribute. Depending on whether your application is an XML Web Services client or web service, Open Liberty either enables or disables default validation. Default validation is much more efficient than XML schema validation, so enabling it provides basic message validation with lower overhead. Disabling it lets you ignore various unmarshalling errors for problematic messages.
+You can configure the default level of JAXB validation of inbound SOAP Messages with the `enableDefaultValidation=true` attribute. Depending on whether your application uses an XML Web Services client or web service implementation, Open Liberty either enables or disables default validation. Default validation is much more efficient than XML schema validation, so enabling it provides basic message validation with lower overhead. Disabling it lets you ignore various unmarshalling errors for problematic messages.
 
 ==== Global default validation
 
