@@ -42,11 +42,6 @@ public class CloudantProducer {
     @ConfigProperty(name = "cloudant.password")
     String encodedPassword;
 
-
-    @Inject
-    @ConfigProperty(name = "cloudant.dbname")
-    String dbname;
-
     @Produces
     public Cloudant createCloudant() {
         String password = PasswordUtil.passwordDecode(encodedPassword);
@@ -62,7 +57,7 @@ public class CloudantProducer {
     }
 }
 ----
-One of the advantages of using a CDI producer is that it can be tailored to your needs. For improved security,the createCloudant method is enhanced to include authentication with a user name and password. This requires the following Maven dependency:
+One of the advantages of using a CDI producer is that it can be tailored to your needs. For improved security,the createCloudant method uses Open Liberty's password decoding. This requires the following Maven dependency:
 [source,xml]
 ----
 <dependency>
@@ -81,6 +76,7 @@ Now, by placing the following snippet in your ``microprofile-config.properties``
 ----
 cloudant.user=admin
 cloudant.password={aes}AEEjCqvh7XAwDxrdYC6BUbqYlwqI8NAxRkWWWq7muxZu
+cloudant.dbname=testdb
 ----
 
 == Injecting the Cloudant client
@@ -89,6 +85,10 @@ Here is an example of using the CDI producer to inject a Cloudant client in a JA
 ----
 @Inject
 Cloudant client;
+
+@Inject
+@ConfigProperty(name = "cloudant.dbname")
+String dbname;
 
 @POST
 @Path("/add")
@@ -153,7 +153,7 @@ In the above example:
 * The `DeleteDocumentOptions` class is used to configure parameters for deleting a document from a Cloudant database. It allows you to specify the database name, the document ID, and the revision (_rev) of the document to ensure that the correct version is deleted (to prevent race conditions). This class uses the builder pattern to set options before sending the delete request to Cloudant.
 
 == No need for a Cloudant feature
-Previously, using Cloudant required enabling the `cloudant-1.0` feature.  Even if the Cloudant Java Driver API changes, simple updates to your CDI producer will allow it to continue to work. You should remove the `cloudant-1.0` feature from your `server.xml` when using the new Cloudant SDK for Java.
+Previously, using Cloudant required enabling the `cloudant-1.0` feature.  Even if the Cloudant SDK for Java's API changes, simple updates to your CDI producer will allow it to continue to work. You should remove the `cloudant-1.0` feature from your `server.xml` when using the new Cloudant SDK for Java.
 
 The Cloudant SDK for Java should be bundled in your application. To do this with Maven you can use a dependency:
 
@@ -165,7 +165,7 @@ The Cloudant SDK for Java should be bundled in your application. To do this with
     <version>x.x.x</version>
 </dependency> 
 ----
-If you have multiple applications accessing Cloudant, instead of bundling the Cloudant client library, you can configure a shared library in your `server.xml` like this:
+If you have multiple applications accessing Cloudant, instead of bundling the Cloudant SDK for Java with each application, you can configure a shared library in your `server.xml` like this:
 [source, xml]
 ----
 <library id="cloudantLib">
