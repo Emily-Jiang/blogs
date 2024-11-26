@@ -16,6 +16,8 @@ Reshmi Vijayan <https://github.com/revijay>
 :url-prefix:
 :url-about: /
 
+Cloudant, an IBM-managed NoSQL database built on top of Apache CouchDB, provides a powerful solution for document-oriented storage with high availability and scalability. Cloudant provides a robust, flexible, and highly scalable NoSQL database solution that is tailor-made for cloud-native applications. Its ability to scale flawless, offer high availability, and support real-time data access makes it a perfect fit for dynamic, modern applications running in the cloud. Cloudant with Open Liberty offers a seamless way to build, deploy, and scale your Java applications with efficient, scalable data storage.
+
 Using Cloudant with Open Liberty previously meant enabling the `cloudant-1.0` feature and configuring several elements in ``server.xml``. With CDI and MicroProfile Config,  you can easily configure access to Cloudant with a CDI producer (for an introduction to using CDI producers, see the https://openliberty.io/guides/cdi-intro.html[Injecting Dependencies into Microservices guide]). The cloudant-1.0 feature was implemented using Java Cloudant Client library which is no longer supported, so in this demonstration we are using the new Cloudant SDK for Java.
 
 == A CDI producer for Cloudant
@@ -181,5 +183,11 @@ If you have multiple applications accessing Cloudant, instead of bundling the Cl
 </application>
 ----
 
-This illustrates how easy it is to create a CDI producer for Cloudant, and configure it with MicroProfile Config that help you to integrate Cloudant into an Open Liberty-based Java application, leveraging the power of Cloudant's NoSQL database with the flexibility of Open Liberty’s lightweight, cloud-native architecture.
-The full sample is available on GitHub here:link:https://github.com/OpenLiberty/sample-cloudant[https://github.com/OpenLiberty/sample-cloudant]
+== Summary
+In this blog post, we explored how easy it is to create a CDI producer for Cloudant, and configure it with MicroProfile Config that help you to integrate Cloudant into an Open Liberty-based Java application, leveraging the power of Cloudant's NoSQL database with the flexibility of Open Liberty’s lightweight, cloud-native architecture.
+The full sample is available on GitHub here:link:https://github.com/OpenLiberty/sample-cloudant[https://github.com/OpenLiberty/sample-cloudant].
+
+By combining the strengths of Cloudant and Open Liberty, developers can create powerful, cloud-native applications that are both flexible and scalable, with minimal infrastructure management. This integration ensures real-time data access, robust data storage, and seamless scaling—all essential for modern, data-driven applications in the cloud.
+
+== Next Steps
+As your application evolves, consider exploring more advanced capabilities of both Cloudant and Open Liberty to unlock their full potential in building resilient, high-performance cloud-native applications. Whether you're scaling your infrastructure, improving security, or enhancing performance, the possibilities are vast for developers leveraging these technologies together.
